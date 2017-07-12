@@ -7,24 +7,29 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class LoginViewController: UIViewController {
     
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var userNameTextField: UITextField!
+    @IBOutlet weak var signUpButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loginButton.setTitle("Login", for: UIControlState.normal)
+        // set button styles and labels
+        loginButton.setTitle("Log In", for: UIControlState.normal)
+        signUpButton.setTitle("Sign Up", for: UIControlState.normal)
         // Do any additional setup after loading the view.
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
     }
+    
     
     @IBAction func loginButtonAction(_ sender: Any) {
         guard

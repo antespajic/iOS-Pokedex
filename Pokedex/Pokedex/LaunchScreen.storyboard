@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.19" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="EpJ-HW-3rx">
-    <device id="retina4_7" orientation="portrait">
+    <device id="ipad9_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -17,30 +17,30 @@
                         <viewControllerLayoutGuide type="bottom" id="ScN-Jd-xMT"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="0Nh-uR-0zc">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pokedex-logo-big" translatesAutoresizingMaskIntoConstraints="NO" id="NRi-NN-qMV">
-                                <rect key="frame" x="28" y="179" width="319" height="128"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="128" id="jG9-gq-bkv"/>
-                                    <constraint firstAttribute="width" constant="319" id="mU2-9P-SM5"/>
-                                </constraints>
-                            </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pokeball" translatesAutoresizingMaskIntoConstraints="NO" id="CjZ-ur-l08">
-                                <rect key="frame" x="112" y="303" width="151" height="151"/>
+                                <rect key="frame" x="308.5" y="481.5" width="151" height="151"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="151" id="Nnq-P4-cav"/>
                                     <constraint firstAttribute="width" constant="151" id="ypS-3y-UX3"/>
                                 </constraints>
                             </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pokedex-logo-big" translatesAutoresizingMaskIntoConstraints="NO" id="NRi-NN-qMV">
+                                <rect key="frame" x="224.5" y="369.5" width="319" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="jG9-gq-bkv"/>
+                                    <constraint firstAttribute="width" constant="319" id="mU2-9P-SM5"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="NRi-NN-qMV" firstAttribute="centerY" secondItem="0Nh-uR-0zc" secondAttribute="centerY" constant="-90.5" id="Gx4-Sd-EIs"/>
+                            <constraint firstItem="CjZ-ur-l08" firstAttribute="top" secondItem="NRi-NN-qMV" secondAttribute="bottom" constant="-16" id="4p1-Yu-z2T"/>
                             <constraint firstItem="CjZ-ur-l08" firstAttribute="centerY" secondItem="0Nh-uR-0zc" secondAttribute="centerY" constant="45" id="LKI-2y-Hje"/>
                             <constraint firstItem="CjZ-ur-l08" firstAttribute="centerX" secondItem="0Nh-uR-0zc" secondAttribute="centerX" id="Lui-V5-kc8"/>
-                            <constraint firstItem="NRi-NN-qMV" firstAttribute="centerX" secondItem="0Nh-uR-0zc" secondAttribute="centerX" id="WB3-iO-lV6"/>
+                            <constraint firstItem="NRi-NN-qMV" firstAttribute="centerX" secondItem="0Nh-uR-0zc" secondAttribute="centerX" id="zlw-aB-0By"/>
                         </constraints>
                     </view>
                 </viewController>
