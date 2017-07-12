@@ -51,16 +51,16 @@
                                 <state key="normal" title="Button"/>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pokeball" translatesAutoresizingMaskIntoConstraints="NO" id="8qK-TA-SSf">
-                                <rect key="frame" x="65.5" y="182.5" width="244" height="233.5"/>
+                                <rect key="frame" x="65.5" y="154" width="244" height="233"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pokedex-logo-big" translatesAutoresizingMaskIntoConstraints="NO" id="2mb-ao-4y1">
-                                <rect key="frame" x="28" y="42" width="319" height="167"/>
+                                <rect key="frame" x="28" y="42" width="319" height="133.5"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="1DK-ov-LyJ" firstAttribute="leading" secondItem="XJf-JH-sG5" secondAttribute="leading" constant="50" id="0rp-pJ-Vvc"/>
-                            <constraint firstItem="2mb-ao-4y1" firstAttribute="height" secondItem="XJf-JH-sG5" secondAttribute="height" multiplier="0.25" id="104-kt-4Hd"/>
+                            <constraint firstItem="2mb-ao-4y1" firstAttribute="height" secondItem="XJf-JH-sG5" secondAttribute="height" multiplier="0.2" id="104-kt-4Hd"/>
                             <constraint firstItem="8qK-TA-SSf" firstAttribute="centerX" secondItem="XJf-JH-sG5" secondAttribute="centerX" id="5E0-s3-z8s"/>
                             <constraint firstAttribute="trailing" secondItem="Mq4-JH-S65" secondAttribute="trailing" id="5aX-uH-TvE"/>
                             <constraint firstItem="Is2-Ec-HSd" firstAttribute="top" secondItem="XOb-xq-Xqf" secondAttribute="bottom" id="8j5-RC-x71"/>
