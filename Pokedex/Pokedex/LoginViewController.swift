@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import PKHUD
 
 class LoginViewController: UIViewController {
     
@@ -24,7 +25,11 @@ class LoginViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
     // set button styles and labels
@@ -35,7 +40,17 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func signUpButtonAction(_ sender: Any) {
-        
+        let bundle = Bundle.main
+        let storyboard = UIStoryboard(name: "Main", bundle: bundle)
+        let signUpViewController = storyboard.instantiateViewController(
+            withIdentifier: "SignUpViewController"
+        )
+        PKHUD.sharedHUD.contentView = PKHUDProgressView()
+        PKHUD.sharedHUD.show()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2 ) { [weak self] in
+            PKHUD.sharedHUD.hide()
+            self?.navigationController?.pushViewController(signUpViewController, animated: true)
+        }
     }
     
     @IBAction func loginButtonAction(_ sender: Any) {
