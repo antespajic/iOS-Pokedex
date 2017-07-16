@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import MBProgressHUD
 
 class LoginViewController: UIViewController {
     
@@ -19,10 +18,8 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // set button styles and labels
-        loginButton.setTitle("Log In", for: UIControlState.normal)
-        signUpButton.setTitle("Sign Up", for: UIControlState.normal)
         // Do any additional setup after loading the view.
+        setupView()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -30,6 +27,16 @@ class LoginViewController: UIViewController {
         
     }
     
+    // set button styles and labels
+    func setupView() {
+        loginButton.setTitle("Log In", for: UIControlState.normal)
+        signUpButton.setTitle("Sign Up", for: UIControlState.normal)
+        
+    }
+    
+    @IBAction func signUpButtonAction(_ sender: Any) {
+        
+    }
     
     @IBAction func loginButtonAction(_ sender: Any) {
         guard

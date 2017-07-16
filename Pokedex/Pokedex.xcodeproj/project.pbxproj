@@ -14,6 +14,7 @@
 		5C1CAADB1F0E8EC300770705 /* PokedexTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1CAADA1F0E8EC300770705 /* PokedexTests.swift */; };
 		5C1CAAE61F0E8EC300770705 /* PokedexUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1CAAE51F0E8EC300770705 /* PokedexUITests.swift */; };
 		5C1CAAF41F0E9BD800770705 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1CAAF31F0E9BD800770705 /* LoginViewController.swift */; };
+		5C21479C1F1BD7FD0003602C /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C21479B1F1BD7FD0003602C /* RegisterViewController.swift */; };
 		5C9C2C881F13DBE4005149B6 /* MBProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C9C2C871F13DBE4005149B6 /* MBProgressHUD.framework */; };
 		6952E02A7E59C9C6C1A3D4F0 /* Pods_PokedexTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35D11E9E0635873DDD9AF8C1 /* Pods_PokedexTests.framework */; };
 		920CB3C5E87550069C0586FF /* Pods_PokedexUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11C90FF4EB44A3205A8EFA63 /* Pods_PokedexUITests.framework */; };
@@ -55,6 +56,7 @@
 		5C1CAAE51F0E8EC300770705 /* PokedexUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokedexUITests.swift; sourceTree = "<group>"; };
 		5C1CAAE71F0E8EC300770705 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5C1CAAF31F0E9BD800770705 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		5C21479B1F1BD7FD0003602C /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		5C9C2C871F13DBE4005149B6 /* MBProgressHUD.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MBProgressHUD.framework; path = "Pods/../build/Debug-iphoneos/MBProgressHUD/MBProgressHUD.framework"; sourceTree = "<group>"; };
 		75EFF8EC62DD9E2E803973A3 /* Pods-PokedexTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PokedexTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PokedexTests/Pods-PokedexTests.release.xcconfig"; sourceTree = "<group>"; };
 		8145EE7713719C1C7C7F00F6 /* Pods-Pokedex.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pokedex.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Pokedex/Pods-Pokedex.debug.xcconfig"; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 				5C1CAAD11F0E8EC300770705 /* Info.plist */,
 				5C1CAAF31F0E9BD800770705 /* LoginViewController.swift */,
 				5C1AC5A81F10FA1800773394 /* LaunchScreen.storyboard */,
+				5C21479B1F1BD7FD0003602C /* RegisterViewController.swift */,
 			);
 			path = Pokedex;
 			sourceTree = "<group>";
@@ -411,11 +414,15 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Pokedex/Pods-Pokedex-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/CodableAlamofire/CodableAlamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/PKHUD/PKHUD.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CodableAlamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PKHUD.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -459,6 +466,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C21479C1F1BD7FD0003602C /* RegisterViewController.swift in Sources */,
 				5C1CAAF41F0E9BD800770705 /* LoginViewController.swift in Sources */,
 				5C1CAAC61F0E8EC300770705 /* AppDelegate.swift in Sources */,
 			);
