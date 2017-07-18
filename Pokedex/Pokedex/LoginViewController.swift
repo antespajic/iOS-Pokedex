@@ -23,10 +23,6 @@ class LoginViewController: UIViewController {
         setupView()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
@@ -34,21 +30,22 @@ class LoginViewController: UIViewController {
     
     // set button styles and labels
     func setupView() {
-        loginButton.setTitle("Log In", for: UIControlState.normal)
-        signUpButton.setTitle("Sign Up", for: UIControlState.normal)
+        loginButton.setTitle("Log In", for: .normal)
+        signUpButton.setTitle("Sign Up", for: .normal)
         
     }
     
     @IBAction func signUpButtonAction(_ sender: Any) {
         let bundle = Bundle.main
         let storyboard = UIStoryboard(name: "Main", bundle: bundle)
-        let signUpViewController = storyboard.instantiateViewController(
-            withIdentifier: "SignUpViewController"
-        )
+        
         PKHUD.sharedHUD.contentView = PKHUDProgressView()
         PKHUD.sharedHUD.show()
         DispatchQueue.main.asyncAfter(deadline: .now() + 2 ) { [weak self] in
             PKHUD.sharedHUD.hide()
+            let signUpViewController = storyboard.instantiateViewController(
+                withIdentifier: "SignUpViewController"
+            )
             self?.navigationController?.pushViewController(signUpViewController, animated: true)
         }
     }

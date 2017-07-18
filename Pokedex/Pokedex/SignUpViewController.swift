@@ -37,11 +37,7 @@ class SignUpViewController: UIViewController {
         navigationController?.setNavigationBarHidden(false, animated: true)
         navigationController?.navigationBar.backItem?.title = ""
         
-        emailTextField.placeholder = "E-mail"
-        usernameTextField.placeholder = "Username"
-        passwordTextField.placeholder = "Password"
-        confirmPasswordTextField.placeholder = "Confirm password"
-        signUpButton.setTitle("Sign Up", for: UIControlState.normal)
+        signUpButton.setTitle("Sign Up", for: .normal)
     }
 
     @IBAction func signUpAction(_ sender: Any) {
