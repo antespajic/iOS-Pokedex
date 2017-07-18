@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import MBProgressHUD
+import PKHUD
 
 class LoginViewController: UIViewController {
     
@@ -19,17 +19,39 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // set button styles and labels
-        loginButton.setTitle("Log In", for: UIControlState.normal)
-        signUpButton.setTitle("Sign Up", for: UIControlState.normal)
         // Do any additional setup after loading the view.
+        setupView()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    // set button styles and labels
+    func setupView() {
+        loginButton.setTitle("Log In", for: UIControlState.normal)
+        signUpButton.setTitle("Sign Up", for: UIControlState.normal)
         
     }
     
+    @IBAction func signUpButtonAction(_ sender: Any) {
+        let bundle = Bundle.main
+        let storyboard = UIStoryboard(name: "Main", bundle: bundle)
+        let signUpViewController = storyboard.instantiateViewController(
+            withIdentifier: "SignUpViewController"
+        )
+        PKHUD.sharedHUD.contentView = PKHUDProgressView()
+        PKHUD.sharedHUD.show()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2 ) { [weak self] in
+            PKHUD.sharedHUD.hide()
+            self?.navigationController?.pushViewController(signUpViewController, animated: true)
+        }
+    }
     
     @IBAction func loginButtonAction(_ sender: Any) {
         guard
