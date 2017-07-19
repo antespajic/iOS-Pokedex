@@ -8,6 +8,7 @@
 
 import UIKit
 import PKHUD
+import RxSwift
 
 class LoginViewController: UIViewController {
     
@@ -15,6 +16,8 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var userNameTextField: UITextField!
     @IBOutlet weak var signUpButton: UIButton!
+    
+    let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,8 +39,7 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func signUpButtonAction(_ sender: Any) {
-        let bundle = Bundle.main
-        let storyboard = UIStoryboard(name: "Main", bundle: bundle)
+        let storyboard = UIStoryboard(name: "Main", bundle: .main)
         
         PKHUD.sharedHUD.contentView = PKHUDProgressView()
         PKHUD.sharedHUD.show()
@@ -57,17 +59,27 @@ class LoginViewController: UIViewController {
             !username.isEmpty, !password.isEmpty
             else { return }
         
-        print(username + " " + password)
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: .main)
+        PKHUD.sharedHUD.contentView = PKHUDProgressView()
+        PKHUD.sharedHUD.show()
+        
+        SessionService
+            .login(email: username, password: password)
+            .subscribe(
+                onNext: { [weak self] response in
+                    PKHUD.sharedHUD.hide()
+                    guard let user = response else {
+                        return
+                    }
+                    let homeViewController = storyboard.instantiateViewController(
+                        withIdentifier: "HomeViewController"
+                    )
+                    self?.navigationController?.setViewControllers([homeViewController], animated: true)
+                    print (user)
+                }
+        ).disposed(by: disposeBag)
+        
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
