@@ -10,7 +10,7 @@ import UIKit
 import PKHUD
 import RxSwift
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, Progressable{
     
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -21,6 +21,49 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        loginButton
+            .rx.tap
+            .asDriver()
+            .drive(onNext: { _ in
+                guard
+                    let username = self.userNameTextField.text,
+                    let password = self.passwordTextField.text,
+                    !username.isEmpty, !password.isEmpty
+                    else { return }
+                
+                let storyboard = UIStoryboard(name: "Main", bundle: .main)
+                self.showLoading()
+
+                SessionService
+                    .login(email: username, password: password)
+                    .subscribe(
+                        onNext: { [weak self] response in
+                            self?.hideLoading()
+                            // guard let user = response else { return }
+                            let homeViewController = storyboard.instantiateViewController(
+                                withIdentifier: "HomeViewController"
+                            )
+                            self?.navigationController?.setViewControllers([homeViewController], animated: true)
+                        }
+                    ).disposed(by: self.disposeBag)
+            }).disposed(by: disposeBag)
+        
+        signUpButton
+            .rx.tap
+            .asDriver()
+            .drive(onNext: { _ in
+                let storyboard = UIStoryboard(name: "Main", bundle: .main)
+                
+                self.showLoading()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2 ) { [weak self] in
+                    self?.hideLoading()
+                    let signUpViewController = storyboard.instantiateViewController(
+                        withIdentifier: "SignUpViewController"
+                    )
+                    self?.navigationController?.pushViewController(signUpViewController, animated: true)
+                }
+            }).disposed(by: disposeBag)
         
         // Do any additional setup after loading the view.
         setupView()
@@ -35,50 +78,6 @@ class LoginViewController: UIViewController {
     func setupView() {
         loginButton.setTitle("Log In", for: .normal)
         signUpButton.setTitle("Sign Up", for: .normal)
-        
-    }
-    
-    @IBAction func signUpButtonAction(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "Main", bundle: .main)
-        
-        PKHUD.sharedHUD.contentView = PKHUDProgressView()
-        PKHUD.sharedHUD.show()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2 ) { [weak self] in
-            PKHUD.sharedHUD.hide()
-            let signUpViewController = storyboard.instantiateViewController(
-                withIdentifier: "SignUpViewController"
-            )
-            self?.navigationController?.pushViewController(signUpViewController, animated: true)
-        }
-    }
-    
-    @IBAction func loginButtonAction(_ sender: Any) {
-        guard
-            let username = userNameTextField.text,
-            let password = passwordTextField.text,
-            !username.isEmpty, !password.isEmpty
-            else { return }
-        
-        
-        let storyboard = UIStoryboard(name: "Main", bundle: .main)
-        PKHUD.sharedHUD.contentView = PKHUDProgressView()
-        PKHUD.sharedHUD.show()
-        
-        SessionService
-            .login(email: username, password: password)
-            .subscribe(
-                onNext: { [weak self] response in
-                    PKHUD.sharedHUD.hide()
-                    guard let user = response else {
-                        return
-                    }
-                    let homeViewController = storyboard.instantiateViewController(
-                        withIdentifier: "HomeViewController"
-                    )
-                    self?.navigationController?.setViewControllers([homeViewController], animated: true)
-                    print (user)
-                }
-        ).disposed(by: disposeBag)
         
     }
 

@@ -11,7 +11,7 @@ import Alamofire
 import CodableAlamofire
 import RxSwift
 
-struct SessionService {
+class SessionService {
     
     static func login(email: String, password: String) -> Observable<User?> {
         let params = [
@@ -25,7 +25,8 @@ struct SessionService {
         ]
         
         return Observable.create { observer in
-            Alamofire
+            
+            let request = Alamofire
                 .request(
                     APIConstants.baseURL + "/users/login",
                     method: .post,
@@ -37,11 +38,15 @@ struct SessionService {
                     switch response.result {
                     case .success(let user):
                         observer.onNext(user)
+                        observer.onCompleted()
                     case .failure(let error):
                         observer.onError(error)
                     }
             }
-            return Disposables.create()
+            
+            return Disposables.create{
+                request.cancel()
+            }
         }
         
     }
