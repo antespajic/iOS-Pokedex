@@ -8,6 +8,7 @@
 
 import UIKit
 import PKHUD
+import RxSwift
 
 class LoginViewController: UIViewController {
     
@@ -16,15 +17,13 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var userNameTextField: UITextField!
     @IBOutlet weak var signUpButton: UIButton!
     
+    let disposeBag = DisposeBag()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
         setupView()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -34,21 +33,21 @@ class LoginViewController: UIViewController {
     
     // set button styles and labels
     func setupView() {
-        loginButton.setTitle("Log In", for: UIControlState.normal)
-        signUpButton.setTitle("Sign Up", for: UIControlState.normal)
+        loginButton.setTitle("Log In", for: .normal)
+        signUpButton.setTitle("Sign Up", for: .normal)
         
     }
     
     @IBAction func signUpButtonAction(_ sender: Any) {
-        let bundle = Bundle.main
-        let storyboard = UIStoryboard(name: "Main", bundle: bundle)
-        let signUpViewController = storyboard.instantiateViewController(
-            withIdentifier: "SignUpViewController"
-        )
+        let storyboard = UIStoryboard(name: "Main", bundle: .main)
+        
         PKHUD.sharedHUD.contentView = PKHUDProgressView()
         PKHUD.sharedHUD.show()
         DispatchQueue.main.asyncAfter(deadline: .now() + 2 ) { [weak self] in
             PKHUD.sharedHUD.hide()
+            let signUpViewController = storyboard.instantiateViewController(
+                withIdentifier: "SignUpViewController"
+            )
             self?.navigationController?.pushViewController(signUpViewController, animated: true)
         }
     }
@@ -60,17 +59,27 @@ class LoginViewController: UIViewController {
             !username.isEmpty, !password.isEmpty
             else { return }
         
-        print(username + " " + password)
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: .main)
+        PKHUD.sharedHUD.contentView = PKHUDProgressView()
+        PKHUD.sharedHUD.show()
+        
+        SessionService
+            .login(email: username, password: password)
+            .subscribe(
+                onNext: { [weak self] response in
+                    PKHUD.sharedHUD.hide()
+                    guard let user = response else {
+                        return
+                    }
+                    let homeViewController = storyboard.instantiateViewController(
+                        withIdentifier: "HomeViewController"
+                    )
+                    self?.navigationController?.setViewControllers([homeViewController], animated: true)
+                    print (user)
+                }
+        ).disposed(by: disposeBag)
+        
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

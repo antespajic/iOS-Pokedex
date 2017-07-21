@@ -8,6 +8,7 @@
 
 import UIKit
 import PKHUD
+import RxSwift
 
 class SignUpViewController: UIViewController {
 
@@ -16,6 +17,8 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var confirmPasswordTextField: UITextField!
     @IBOutlet weak var signUpButton: UIButton!
+    
+    let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,29 +40,39 @@ class SignUpViewController: UIViewController {
         navigationController?.setNavigationBarHidden(false, animated: true)
         navigationController?.navigationBar.backItem?.title = ""
         
-        emailTextField.placeholder = "E-mail"
-        usernameTextField.placeholder = "Username"
-        passwordTextField.placeholder = "Password"
-        confirmPasswordTextField.placeholder = "Confirm password"
-        signUpButton.setTitle("Sign Up", for: UIControlState.normal)
+        signUpButton.setTitle("Sign Up", for: .normal)
     }
 
     @IBAction func signUpAction(_ sender: Any) {
+        
+        guard let email = emailTextField.text,
+            let username = usernameTextField.text,
+            let password = passwordTextField.text,
+            let confirmPassword = confirmPasswordTextField.text else { return }
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: .main)
         PKHUD.sharedHUD.contentView = PKHUDProgressView()
         PKHUD.sharedHUD.show()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2 ) {
-            PKHUD.sharedHUD.hide()
-            HUD.flash(.success, delay: 1.0)
-        }
+        
+        UserService.register(email: email,
+                             username: username,
+                             password: password,
+                             confirmationPassword: confirmPassword)
+            .subscribe(onNext: { [weak self] response in
+                //guard let user = response else { return }
+                PKHUD.sharedHUD.hide()
+                HUD.flash(.success, delay: 1.0)
+                let homeViewController = storyboard.instantiateViewController(
+                    withIdentifier: "HomeViewController"
+                )
+                self?.navigationController?.setViewControllers([homeViewController], animated: true)
+            },
+                onError: { error in
+                    PKHUD.sharedHUD.hide()
+                    HUD.flash(.error, delay: 1.0)
+                    print(error)
+            }
+        ).disposed(by: disposeBag)
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

@@ -1,8 +1,12 @@
 # Uncomment the next line to define a global platform for your project
 platform :ios, '11.0'
+# ignore all warnings from all pods
+inhibit_all_warnings!
 
 # TODO: Remove this after all pods are converted to swift 4
 def swift4_overrides
+    pod 'RxSwift', git: 'https://github.com/ReactiveX/RxSwift.git', branch:'swift4.0'
+    pod 'RxCocoa', git: 'https://github.com/ReactiveX/RxSwift.git', branch:'swift4.0'
     pod 'Alamofire', git: 'https://github.com/Alamofire/Alamofire.git', branch: 'swift4'
     pod 'PKHUD', :git => 'https://github.com/pkluz/PKHUD.git', :branch => 'release/swift4'
 end
