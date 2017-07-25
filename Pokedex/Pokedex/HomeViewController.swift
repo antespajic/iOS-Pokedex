@@ -7,29 +7,71 @@
 //
 
 import UIKit
+import RxCocoa
+import RxSwift
 
 class HomeViewController: UIViewController {
 
+    let disposeBag = DisposeBag()
+    
+    var user: User?
+    
+    @IBOutlet weak var tableView: UITableView! {
+        didSet {
+            tableView.delegate = self
+            tableView.dataSource = self
+        }
+    }
+    
+    let pokemons: [Pokemon] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        PokemonService.getAll()
+            .subscribe(
+                onNext: { [weak self] response in
+                    self?.pokemons.append(contentsOf: response)
+                },
+                onError: { error in
+                    print("E jebiga")
+                }
+            ).disposed(by: disposeBag)
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
+
+
+extension HomeViewController: UITableViewDelegate {
+    
+}
+
+extension HomeViewController: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        /*
+         Number of rows in each section
+         */
+        return pokemons.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: PokemonTableViewCell = tableView.dequeueReusableCell(
+            withIdentifier: "PokemonTableViewCell",
+            for: indexPath
+        ) as! PokemonTableViewCell
+        let poke = pokemons[0]
+        
+        cell.pokemonName.text = poke.name
+        
+        return cell
+    }
+    
+}
+
+

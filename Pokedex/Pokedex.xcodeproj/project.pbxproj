@@ -16,6 +16,10 @@
 		5C1CAAF41F0E9BD800770705 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1CAAF31F0E9BD800770705 /* LoginViewController.swift */; };
 		5C21479C1F1BD7FD0003602C /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C21479B1F1BD7FD0003602C /* SignUpViewController.swift */; };
 		5C425ED71F210432003098BB /* Progressable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C425ED61F210432003098BB /* Progressable.swift */; };
+		5C48EBF31F27BA300036E47D /* Pokemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C48EBF21F27BA300036E47D /* Pokemon.swift */; };
+		5C48EBF51F27C1B00036E47D /* PokemonService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C48EBF41F27C1B00036E47D /* PokemonService.swift */; };
+		5C48EBF71F27C2C10036E47D /* UserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C48EBF61F27C2C10036E47D /* UserSession.swift */; };
+		5C48EBF91F27C5B20036E47D /* PokemonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C48EBF81F27C5B20036E47D /* PokemonTableViewCell.swift */; };
 		5C82A70F1F1E84B30017F67F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C82A70E1F1E84B30017F67F /* HomeViewController.swift */; };
 		5C82A7121F1E87780017F67F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C82A7111F1E87780017F67F /* User.swift */; };
 		5C82A7161F1E8AE10017F67F /* SessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C82A7151F1E8AE10017F67F /* SessionService.swift */; };
@@ -63,6 +67,10 @@
 		5C1CAAF31F0E9BD800770705 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		5C21479B1F1BD7FD0003602C /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		5C425ED61F210432003098BB /* Progressable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Progressable.swift; sourceTree = "<group>"; };
+		5C48EBF21F27BA300036E47D /* Pokemon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pokemon.swift; sourceTree = "<group>"; };
+		5C48EBF41F27C1B00036E47D /* PokemonService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonService.swift; sourceTree = "<group>"; };
+		5C48EBF61F27C2C10036E47D /* UserSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSession.swift; sourceTree = "<group>"; };
+		5C48EBF81F27C5B20036E47D /* PokemonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonTableViewCell.swift; sourceTree = "<group>"; };
 		5C82A70E1F1E84B30017F67F /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		5C82A7111F1E87780017F67F /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		5C82A7151F1E8AE10017F67F /* SessionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionService.swift; sourceTree = "<group>"; };
@@ -144,7 +152,11 @@
 				5C425ED61F210432003098BB /* Progressable.swift */,
 				5C82A7151F1E8AE10017F67F /* SessionService.swift */,
 				5C82A7171F1E8E6C0017F67F /* UserService.swift */,
+				5C48EBF61F27C2C10036E47D /* UserSession.swift */,
 				5C82A7191F1E8EF70017F67F /* APIConstants.swift */,
+				5C48EBF21F27BA300036E47D /* Pokemon.swift */,
+				5C48EBF41F27C1B00036E47D /* PokemonService.swift */,
+				5C48EBF81F27C5B20036E47D /* PokemonTableViewCell.swift */,
 			);
 			path = Pokedex;
 			sourceTree = "<group>";
@@ -492,11 +504,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C48EBF51F27C1B00036E47D /* PokemonService.swift in Sources */,
 				5C82A7181F1E8E6C0017F67F /* UserService.swift in Sources */,
+				5C48EBF91F27C5B20036E47D /* PokemonTableViewCell.swift in Sources */,
 				5C425ED71F210432003098BB /* Progressable.swift in Sources */,
+				5C48EBF71F27C2C10036E47D /* UserSession.swift in Sources */,
 				5C21479C1F1BD7FD0003602C /* SignUpViewController.swift in Sources */,
 				5C82A7161F1E8AE10017F67F /* SessionService.swift in Sources */,
 				5C1CAAF41F0E9BD800770705 /* LoginViewController.swift in Sources */,
+				5C48EBF31F27BA300036E47D /* Pokemon.swift in Sources */,
 				5C82A71A1F1E8EF70017F67F /* APIConstants.swift in Sources */,
 				5C1CAAC61F0E8EC300770705 /* AppDelegate.swift in Sources */,
 				5C82A7121F1E87780017F67F /* User.swift in Sources */,

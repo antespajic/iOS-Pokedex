@@ -13,6 +13,8 @@ import RxSwift
 
 class UserService {
     
+    private init() {}
+    
     static func register(email: String, username: String, password: String, confirmationPassword: String) -> Observable<User?> {
         let params = [
             "data": [

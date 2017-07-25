@@ -31,9 +31,10 @@ class SignUpViewController: UIViewController, Progressable {
                 guard let email = self.emailTextField.text,
                     let username = self.usernameTextField.text,
                     let password = self.passwordTextField.text,
-                    let confirmPassword = self.confirmPasswordTextField.text else { return }
+                    let confirmPassword = self.confirmPasswordTextField.text,
+                    self.confirmPasswordTextField.text == self.passwordTextField.text
+                else { return }
                 
-                let storyboard = UIStoryboard(name: "Main", bundle: .main)
                 self.showLoading()
                 
                 UserService.register(email: email,
@@ -41,17 +42,22 @@ class SignUpViewController: UIViewController, Progressable {
                                      password: password,
                                      confirmationPassword: confirmPassword)
                     .subscribe(onNext: { [weak self] response in
-                        //guard let user = response else { return }
                         self?.showSuccess()
+                        guard let user = response else { return }
+                    
+                        UserSession.sharedInstance.authToken = user.authToken
+                        
+                        let storyboard = UIStoryboard(name: "Main", bundle: .main)
                         let homeViewController = storyboard.instantiateViewController(
                             withIdentifier: "HomeViewController"
-                        )
+                        ) as! HomeViewController
+                        homeViewController.user = user
                         self?.navigationController?.setViewControllers([homeViewController], animated: true)
-                        },
-                               onError: { [weak self] error in
-                                self?.showError()
-                                print(error)
-                        }
+                    },
+                   onError: { [weak self] error in
+                        self?.showError()
+                        print(error)
+                    }
                     ).disposed(by: self.disposeBag)
             })
             .disposed(by: disposeBag)

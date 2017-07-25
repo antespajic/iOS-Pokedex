@@ -10,7 +10,7 @@ import UIKit
 import PKHUD
 import RxSwift
 
-class LoginViewController: UIViewController, Progressable{
+class LoginViewController: UIViewController, Progressable {
     
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -32,7 +32,7 @@ class LoginViewController: UIViewController, Progressable{
                     !username.isEmpty, !password.isEmpty
                     else { return }
                 
-                let storyboard = UIStoryboard(name: "Main", bundle: .main)
+                
                 self.showLoading()
 
                 SessionService
@@ -40,10 +40,15 @@ class LoginViewController: UIViewController, Progressable{
                     .subscribe(
                         onNext: { [weak self] response in
                             self?.hideLoading()
-                            // guard let user = response else { return }
+                            guard let user = response else { return }
+                            
+                            UserSession.sharedInstance.authToken = user.authToken
+                            
+                            let storyboard = UIStoryboard(name: "Main", bundle: .main)
                             let homeViewController = storyboard.instantiateViewController(
                                 withIdentifier: "HomeViewController"
-                            )
+                            ) as! HomeViewController
+                            homeViewController.user = user
                             self?.navigationController?.setViewControllers([homeViewController], animated: true)
                         }
                     ).disposed(by: self.disposeBag)
@@ -53,11 +58,10 @@ class LoginViewController: UIViewController, Progressable{
             .rx.tap
             .asDriver()
             .drive(onNext: { _ in
-                let storyboard = UIStoryboard(name: "Main", bundle: .main)
-                
                 self.showLoading()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2 ) { [weak self] in
                     self?.hideLoading()
+                    let storyboard = UIStoryboard(name: "Main", bundle: .main)
                     let signUpViewController = storyboard.instantiateViewController(
                         withIdentifier: "SignUpViewController"
                     )

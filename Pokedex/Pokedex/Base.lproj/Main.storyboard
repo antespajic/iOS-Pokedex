@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13156.6" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="kez-Lq-VEa">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13156.6" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="kez-Lq-VEa">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13137.5"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -13,11 +14,7 @@
         <scene sceneID="ggS-kX-jsZ">
             <objects>
                 <viewController id="VaO-zW-gTh" customClass="LoginViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="SBA-8Y-CVt"/>
-                        <viewControllerLayoutGuide type="bottom" id="Is2-Ec-HSd"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="XJf-JH-sG5">
+                    <view key="view" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="YES" id="XJf-JH-sG5">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -124,12 +121,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="htb-AS-WYd" secondAttribute="trailing" id="7RP-3X-nrN"/>
+                            <constraint firstItem="JAI-Z8-UdL" firstAttribute="trailing" secondItem="htb-AS-WYd" secondAttribute="trailing" id="7RP-3X-nrN"/>
                             <constraint firstItem="htb-AS-WYd" firstAttribute="top" secondItem="XJf-JH-sG5" secondAttribute="top" id="CP4-Aq-F2F"/>
-                            <constraint firstItem="Is2-Ec-HSd" firstAttribute="top" secondItem="htb-AS-WYd" secondAttribute="bottom" id="PaL-8V-AAD"/>
-                            <constraint firstItem="htb-AS-WYd" firstAttribute="leading" secondItem="XJf-JH-sG5" secondAttribute="leading" id="QCD-ib-r0m"/>
+                            <constraint firstItem="JAI-Z8-UdL" firstAttribute="bottom" secondItem="htb-AS-WYd" secondAttribute="bottom" id="PaL-8V-AAD"/>
+                            <constraint firstItem="htb-AS-WYd" firstAttribute="leading" secondItem="JAI-Z8-UdL" secondAttribute="leading" id="QCD-ib-r0m"/>
                             <constraint firstItem="htb-AS-WYd" firstAttribute="width" secondItem="XJf-JH-sG5" secondAttribute="width" id="vQN-tg-XcI"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="JAI-Z8-UdL"/>
                     </view>
                     <navigationItem key="navigationItem" id="yIY-NE-QES"/>
                     <connections>
@@ -147,16 +145,12 @@
         <scene sceneID="Zz1-d2-5yP">
             <objects>
                 <viewController storyboardIdentifier="SignUpViewController" title="Sign Up" useStoryboardIdentifierAsRestorationIdentifier="YES" id="STy-1H-KlB" customClass="SignUpViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="J2M-v6-fy7"/>
-                        <viewControllerLayoutGuide type="bottom" id="NWU-kG-EBi"/>
-                    </layoutGuides>
-                    <scrollView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="YES" id="qLN-ua-cr3">
+                    <scrollView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" insetsLayoutMarginsFromSafeArea="YES" id="qLN-ua-cr3">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Twr-pX-XZm">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="670"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="E-Mail" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dKq-dt-baH">
                                         <rect key="frame" x="50" y="134" width="45" height="17"/>
@@ -282,12 +276,13 @@
                             </view>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="Twr-pX-XZm" firstAttribute="leading" secondItem="qLN-ua-cr3" secondAttribute="leading" id="2Ib-Ej-Jor"/>
+                            <constraint firstItem="Twr-pX-XZm" firstAttribute="leading" secondItem="NLl-BR-qBl" secondAttribute="leading" id="2Ib-Ej-Jor"/>
                             <constraint firstItem="Twr-pX-XZm" firstAttribute="top" secondItem="qLN-ua-cr3" secondAttribute="top" id="ICu-jK-Myg"/>
-                            <constraint firstItem="NWU-kG-EBi" firstAttribute="top" secondItem="Twr-pX-XZm" secondAttribute="bottom" id="eh1-QK-2lR"/>
-                            <constraint firstAttribute="trailing" secondItem="Twr-pX-XZm" secondAttribute="trailing" id="j52-kR-jSv"/>
+                            <constraint firstItem="NLl-BR-qBl" firstAttribute="bottom" secondItem="Twr-pX-XZm" secondAttribute="bottom" id="eh1-QK-2lR"/>
+                            <constraint firstItem="NLl-BR-qBl" firstAttribute="trailing" secondItem="Twr-pX-XZm" secondAttribute="trailing" id="j52-kR-jSv"/>
                             <constraint firstItem="Twr-pX-XZm" firstAttribute="width" secondItem="qLN-ua-cr3" secondAttribute="width" id="ley-Iv-AmL"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="NLl-BR-qBl"/>
                     </scrollView>
                     <connections>
                         <outlet property="confirmPasswordTextField" destination="yeV-ad-0av" id="WpX-DP-Qws"/>
@@ -305,24 +300,66 @@
         <scene sceneID="Rho-5S-viv">
             <objects>
                 <viewController storyboardIdentifier="HomeViewController" id="m1L-jb-cIi" customClass="HomeViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="51F-PL-66O"/>
-                        <viewControllerLayoutGuide type="bottom" id="Tpz-NC-6pV"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="YES" id="RhE-S9-SvT">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Bokbok" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tXa-6p-w17">
-                                <rect key="frame" x="122" y="413" width="106" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="90" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dQ2-iX-tA3">
+                                <rect key="frame" x="0.0" y="20" width="414" height="716"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="PokemonTableViewCell" selectionStyle="default" indentationWidth="10" id="AVZ-c7-03X" customClass="PokemonTableViewCell" customModule="Pokedex" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="AVZ-c7-03X" id="7zW-Qd-UX5">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.666666666666664"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pRJ-R0-flJ">
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                                    <subviews>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tut-Be-95N">
+                                                            <rect key="frame" x="0.0" y="0.0" width="120" height="44"/>
+                                                        </imageView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RnS-o9-aeV">
+                                                            <rect key="frame" x="120" y="0.0" width="294" height="44"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="174" id="DMJ-EC-jKc"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="pRJ-R0-flJ" secondAttribute="bottom" id="9hF-Y6-XPh"/>
+                                                <constraint firstItem="pRJ-R0-flJ" firstAttribute="leading" secondItem="7zW-Qd-UX5" secondAttribute="leading" id="Fxp-3G-dIE"/>
+                                                <constraint firstAttribute="trailing" secondItem="pRJ-R0-flJ" secondAttribute="trailing" id="X37-Ts-ts7"/>
+                                                <constraint firstItem="pRJ-R0-flJ" firstAttribute="top" secondItem="7zW-Qd-UX5" secondAttribute="top" id="dtg-Kh-Vfs"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="pokemonImage" destination="tut-Be-95N" id="slZ-sF-dWb"/>
+                                            <outlet property="pokemonName" destination="RnS-o9-aeV" id="R02-GU-6ZQ"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="F9p-wu-yA9" firstAttribute="trailing" secondItem="dQ2-iX-tA3" secondAttribute="trailing" id="3SX-SU-tXy"/>
+                            <constraint firstItem="dQ2-iX-tA3" firstAttribute="leading" secondItem="F9p-wu-yA9" secondAttribute="leading" id="XQj-eL-dQu"/>
+                            <constraint firstItem="dQ2-iX-tA3" firstAttribute="top" secondItem="F9p-wu-yA9" secondAttribute="top" id="ofI-vN-Yyi"/>
+                            <constraint firstItem="dQ2-iX-tA3" firstAttribute="bottom" secondItem="F9p-wu-yA9" secondAttribute="bottom" id="rUo-zh-CeW"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="F9p-wu-yA9"/>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="dQ2-iX-tA3" id="WuQ-Jn-8C1"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yp3-eM-gd9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

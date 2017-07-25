@@ -13,6 +13,8 @@ import RxSwift
 
 class SessionService {
     
+    private init() {}
+    
     static func login(email: String, password: String) -> Observable<User?> {
         let params = [
             "data" : [
