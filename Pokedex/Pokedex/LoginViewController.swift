@@ -9,6 +9,7 @@
 import UIKit
 import PKHUD
 import RxSwift
+import RxCocoa
 
 class LoginViewController: UIViewController, Progressable {
     
@@ -32,26 +33,10 @@ class LoginViewController: UIViewController, Progressable {
                     !username.isEmpty, !password.isEmpty
                     else { return }
                 
-                
                 self.showLoading()
-
-                SessionService
-                    .login(email: username, password: password)
-                    .subscribe(
-                        onNext: { [weak self] response in
-                            self?.hideLoading()
-                            guard let user = response else { return }
-                            
-                            UserSession.sharedInstance.authToken = user.authToken
-                            
-                            let storyboard = UIStoryboard(name: "Main", bundle: .main)
-                            let homeViewController = storyboard.instantiateViewController(
-                                withIdentifier: "HomeViewController"
-                            ) as! HomeViewController
-                            homeViewController.user = user
-                            self?.navigationController?.setViewControllers([homeViewController], animated: true)
-                        }
-                    ).disposed(by: self.disposeBag)
+                
+                self.login(username: username, password: password)
+                
             }).disposed(by: disposeBag)
         
         signUpButton
@@ -76,6 +61,26 @@ class LoginViewController: UIViewController, Progressable {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    func login(username: String, password: String) {
+        SessionService
+            .login(email: username, password: password)
+            .subscribe(
+                onNext: { [weak self] response in
+                    self?.hideLoading()
+                    guard let user = response else { return }
+                    
+                    UserSession.sharedInstance.createAuthHeader(authToken: user.authToken, email: user.email)
+                    
+                    let storyboard = UIStoryboard(name: "Main", bundle: .main)
+                    let homeViewController = storyboard.instantiateViewController(
+                        withIdentifier: "HomeViewController"
+                        ) as! HomeViewController
+                    homeViewController.user = user
+                    self?.navigationController?.setViewControllers([homeViewController], animated: true)
+                }
+            ).disposed(by: disposeBag)
     }
     
     // set button styles and labels

@@ -11,7 +11,12 @@ import Foundation
 class UserSession {
     static let sharedInstance = UserSession()
     
-    var authToken: String?
+    private(set) var authHeader: String?
     
     private init() {}
+    
+    func createAuthHeader(authToken: String, email: String) {
+        self.authHeader = "Token token=" + authToken + ", email=" + email
+    }
+    
 }

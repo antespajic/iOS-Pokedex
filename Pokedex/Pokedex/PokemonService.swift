@@ -15,21 +15,25 @@ class PokemonService {
     
     private init() {}
     
-    private struct PokemonResponse: Codable {
-        let data: [Pokemon]?
-    }
-    
     static func getAll() -> Observable<[Pokemon]> {
+        
+        guard let authHeader = UserSession.sharedInstance.authHeader else { return Observable.just([]) }
+        
+        let headers: HTTPHeaders = [
+            "Authorization": authHeader
+        ]
         
         return Observable.create { observer in
             let request = Alamofire
                 .request(APIConstants.baseURL + "/pokemons",
-                         method: .get)
+                        method: .get,
+                        headers: headers
+                )
                 .validate()
-                .responseDecodableObject { (response: DataResponse<PokemonResponse>) in
+                .responseDecodableObject(keyPath: "data") { (response: DataResponse<[Pokemon]>) in
                     switch response.result {
-                    case .success(let pokeResponse):
-                        observer.onNext(pokeResponse.data ?? [])
+                    case .success(let pokemons):
+                        observer.onNext(pokemons)
                         observer.onCompleted()
                     case .failure(let error):
                         observer.onError(error)

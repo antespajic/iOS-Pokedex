@@ -10,7 +10,7 @@ import UIKit
 import RxCocoa
 import RxSwift
 
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController, Progressable {
 
     let disposeBag = DisposeBag()
     
@@ -23,22 +23,24 @@ class HomeViewController: UIViewController {
         }
     }
     
-    let pokemons: [Pokemon] = []
+    var pokemons: [Pokemon] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        showLoading()
         PokemonService.getAll()
             .subscribe(
                 onNext: { [weak self] response in
-                    self?.pokemons.append(contentsOf: response)
-                },
-                onError: { error in
-                    print("E jebiga")
+                    self?.pokemons = response
+                    self?.hideLoading()
+                    self?.tableView.reloadData()
                 }
             ).disposed(by: disposeBag)
     }
-    
 }
 
 
@@ -65,8 +67,7 @@ extension HomeViewController: UITableViewDataSource {
             withIdentifier: "PokemonTableViewCell",
             for: indexPath
         ) as! PokemonTableViewCell
-        let poke = pokemons[0]
-        
+        let poke = pokemons[indexPath.row]
         cell.pokemonName.text = poke.name
         
         return cell

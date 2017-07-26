@@ -12,13 +12,13 @@ struct Pokemon: Codable {
     
     private struct DataAttributes: Codable {
         let name: String
-        let baseExperience: Int
-        let isDefault: Bool
+        let baseExperience: Int?
+        let isDefault: Bool?
         let order: Int
         let height: Double
         let weight: Double
-        let createdAt: Date
-        let updatedAt: Date
+        let createdAt: String
+        let updatedAt: String
         let imageUrl: String?
         let description: String
         let totalVoteCount: Int
@@ -47,13 +47,13 @@ struct Pokemon: Codable {
     private let attributes: DataAttributes
     
     var name: String { return attributes.name }
-    var baseExperience: Int { return attributes.baseExperience }
-    var isDefault: Bool { return attributes.isDefault }
+    var baseExperience: Int? { return attributes.baseExperience }
+    var isDefault: Bool? { return attributes.isDefault }
     var order: Int { return attributes.order }
     var height: Double { return attributes.height }
     var weight: Double { return attributes.weight }
-    var createdAt: Date { return attributes.createdAt }
-    var updatedAt: Date { return attributes.updatedAt }
+    var createdAt: String { return attributes.createdAt }
+    var updatedAt: String { return attributes.updatedAt }
     var imageUrl: String? { return attributes.imageUrl }
     var description: String { return attributes.description }
     var totalVoteCount: Int { return attributes.totalVoteCount }

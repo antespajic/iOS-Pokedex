@@ -32,7 +32,7 @@ class SignUpViewController: UIViewController, Progressable {
                     let username = self.usernameTextField.text,
                     let password = self.passwordTextField.text,
                     let confirmPassword = self.confirmPasswordTextField.text,
-                    self.confirmPasswordTextField.text == self.passwordTextField.text
+                    confirmPassword == password
                 else { return }
                 
                 self.showLoading()
@@ -45,7 +45,7 @@ class SignUpViewController: UIViewController, Progressable {
                         self?.showSuccess()
                         guard let user = response else { return }
                     
-                        UserSession.sharedInstance.authToken = user.authToken
+                        UserSession.sharedInstance.createAuthHeader(authToken: user.authToken, email: user.email)
                         
                         let storyboard = UIStoryboard(name: "Main", bundle: .main)
                         let homeViewController = storyboard.instantiateViewController(

@@ -36,9 +36,6 @@
                                         <state key="normal" title="Button">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
-                                        <connections>
-                                            <action selector="loginButtonAction:" destination="VaO-zW-gTh" eventType="touchUpInside" id="2Kq-vM-XU0"/>
-                                        </connections>
                                     </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pokedex-logo-big" translatesAutoresizingMaskIntoConstraints="NO" id="2mb-ao-4y1">
                                         <rect key="frame" x="42" y="28" width="331" height="135"/>
@@ -58,9 +55,6 @@
                                             <constraint firstAttribute="height" constant="60" id="GZy-sO-ow6"/>
                                         </constraints>
                                         <state key="normal" title="Button"/>
-                                        <connections>
-                                            <action selector="signUpButtonAction:" destination="VaO-zW-gTh" eventType="touchUpInside" id="e8C-5E-rXc"/>
-                                        </connections>
                                     </button>
                                     <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sHP-FR-gOa">
                                         <rect key="frame" x="20" y="518" width="374" height="2"/>
@@ -150,7 +144,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Twr-pX-XZm">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <rect key="frame" x="0.0" y="66" width="414" height="670"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="E-Mail" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dKq-dt-baH">
                                         <rect key="frame" x="50" y="134" width="45" height="17"/>
@@ -220,7 +214,7 @@
                                         <rect key="frame" x="16" y="172" width="24" height="24"/>
                                     </imageView>
                                     <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="ic-lock" translatesAutoresizingMaskIntoConstraints="NO" id="ASU-t2-00l">
-                                        <rect key="frame" x="16" y="254.33333333333331" width="24" height="23.999999999999943"/>
+                                        <rect key="frame" x="16" y="254.33333333333331" width="24" height="24"/>
                                     </imageView>
                                     <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Mr-w8-K6p">
                                         <rect key="frame" x="20" y="158" width="374" height="1"/>
@@ -277,7 +271,6 @@
                         </subviews>
                         <constraints>
                             <constraint firstItem="Twr-pX-XZm" firstAttribute="leading" secondItem="NLl-BR-qBl" secondAttribute="leading" id="2Ib-Ej-Jor"/>
-                            <constraint firstItem="Twr-pX-XZm" firstAttribute="top" secondItem="qLN-ua-cr3" secondAttribute="top" id="ICu-jK-Myg"/>
                             <constraint firstItem="NLl-BR-qBl" firstAttribute="bottom" secondItem="Twr-pX-XZm" secondAttribute="bottom" id="eh1-QK-2lR"/>
                             <constraint firstItem="NLl-BR-qBl" firstAttribute="trailing" secondItem="Twr-pX-XZm" secondAttribute="trailing" id="j52-kR-jSv"/>
                             <constraint firstItem="Twr-pX-XZm" firstAttribute="width" secondItem="qLN-ua-cr3" secondAttribute="width" id="ley-Iv-AmL"/>
@@ -308,7 +301,7 @@
                                 <rect key="frame" x="0.0" y="20" width="414" height="716"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="PokemonTableViewCell" selectionStyle="default" indentationWidth="10" id="AVZ-c7-03X" customClass="PokemonTableViewCell" customModule="Pokedex" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="PokemonTableViewCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="PokemonTableViewCell" id="AVZ-c7-03X" customClass="PokemonTableViewCell" customModule="Pokedex" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="AVZ-c7-03X" id="7zW-Qd-UX5">
@@ -318,11 +311,8 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pRJ-R0-flJ">
                                                     <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tut-Be-95N">
-                                                            <rect key="frame" x="0.0" y="0.0" width="120" height="44"/>
-                                                        </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RnS-o9-aeV">
-                                                            <rect key="frame" x="120" y="0.0" width="294" height="44"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="174" id="DMJ-EC-jKc"/>
                                                             </constraints>
@@ -336,12 +326,14 @@
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="pRJ-R0-flJ" secondAttribute="bottom" id="9hF-Y6-XPh"/>
                                                 <constraint firstItem="pRJ-R0-flJ" firstAttribute="leading" secondItem="7zW-Qd-UX5" secondAttribute="leading" id="Fxp-3G-dIE"/>
+                                                <constraint firstItem="pRJ-R0-flJ" firstAttribute="leading" secondItem="7zW-Qd-UX5" secondAttribute="leading" id="U5H-ot-xRH"/>
                                                 <constraint firstAttribute="trailing" secondItem="pRJ-R0-flJ" secondAttribute="trailing" id="X37-Ts-ts7"/>
                                                 <constraint firstItem="pRJ-R0-flJ" firstAttribute="top" secondItem="7zW-Qd-UX5" secondAttribute="top" id="dtg-Kh-Vfs"/>
+                                                <constraint firstAttribute="trailing" secondItem="pRJ-R0-flJ" secondAttribute="trailing" id="mK0-lX-iX2"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <accessibility key="accessibilityConfiguration" identifier="PokemonTableViewCell"/>
                                         <connections>
-                                            <outlet property="pokemonImage" destination="tut-Be-95N" id="slZ-sF-dWb"/>
                                             <outlet property="pokemonName" destination="RnS-o9-aeV" id="R02-GU-6ZQ"/>
                                         </connections>
                                     </tableViewCell>
