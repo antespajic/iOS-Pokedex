@@ -79,6 +79,12 @@ class LoginViewController: UIViewController, Progressable {
                         ) as! HomeViewController
                     homeViewController.user = user
                     self?.navigationController?.setViewControllers([homeViewController], animated: true)
+                },
+                onError: { [weak self] _ in
+                    self?.hideLoading()
+                    let alert = UIAlertController(title: "Oops!", message: "Something went wrong, check your email and password and try again", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                    self?.present(alert, animated: true, completion: nil)
                 }
             ).disposed(by: disposeBag)
     }

@@ -19,4 +19,8 @@ class UserSession {
         self.authHeader = "Token token=" + authToken + ", email=" + email
     }
     
+    func clearAuthHeader() {
+        self.authHeader = Optional.none
+    }
+    
 }

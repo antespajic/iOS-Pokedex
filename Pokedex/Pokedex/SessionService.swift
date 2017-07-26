@@ -53,4 +53,39 @@ class SessionService {
         
     }
     
+    static func logout() -> Observable<Result<Any>> {
+        guard let authHeader = UserSession.sharedInstance.authHeader
+            else {
+            return Observable.just(
+                        Result.failure(
+                            NSError(domain: "Error", code: 453, userInfo: ["Description" : "No auth header"])
+                        )
+                    )
+            }
+        
+        let headers: HTTPHeaders = [
+            "Authorization": authHeader
+        ]
+        
+        return Observable.create { observer in
+            
+            let request = Alamofire
+                .request(
+                    APIConstants.baseURL + "/users/logout",
+                    method: .delete,
+                    headers: headers
+                )
+                .validate()
+                .responseJSON { response in
+                    observer.onNext(response.result)
+                    observer.onCompleted()
+                }
+            
+            return Disposables.create{
+                request.cancel()
+            }
+        }
+        
+    }
+    
 }

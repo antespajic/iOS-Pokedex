@@ -27,6 +27,39 @@ class HomeViewController: UIViewController, Progressable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.navigationBar.backItem?.title = ""
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            image: #imageLiteral(resourceName: "ic-logout"),
+            style: .plain,
+            target: self,
+            action: #selector(logout)
+        )
+        
+        
+    }
+    
+    @objc func logout() {
+        SessionService
+            .logout()
+            .subscribe( onNext: { [weak self] result in
+                switch result {
+                case .success:
+                    UserSession.sharedInstance.clearAuthHeader()
+                    
+                    let storyboard = UIStoryboard(name: "Main", bundle: .main)
+                    let loginViewController = storyboard.instantiateViewController(
+                        withIdentifier: "LoginViewController"
+                        )
+                    
+                    self?.navigationController?.setViewControllers([loginViewController], animated: true)
+                    
+                case .failure:
+                    print("No internet connection?")
+                }
+            }).disposed(by: disposeBag)
     }
     
     override func viewWillAppear(_ animated: Bool) {
