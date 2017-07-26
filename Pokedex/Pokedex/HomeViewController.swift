@@ -38,7 +38,21 @@ class HomeViewController: UIViewController, Progressable {
             action: #selector(logout)
         )
         
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: #imageLiteral(resourceName: "ic-plus"),
+            style: .plain,
+            target: self,
+            action: #selector(createPokemon)
+        )
         
+    }
+    
+    @objc func createPokemon() {
+        let storyboard = UIStoryboard(name: "Main", bundle: .main)
+        let createPokemonViewController = storyboard.instantiateViewController(
+            withIdentifier: "CreatePokemonVC"
+        )
+        self.navigationController?.pushViewController(createPokemonViewController, animated: true)
     }
     
     @objc func logout() {
@@ -51,7 +65,7 @@ class HomeViewController: UIViewController, Progressable {
                     
                     let storyboard = UIStoryboard(name: "Main", bundle: .main)
                     let loginViewController = storyboard.instantiateViewController(
-                        withIdentifier: "LoginViewController"
+                            withIdentifier: "LoginViewController"
                         )
                     
                     self?.navigationController?.setViewControllers([loginViewController], animated: true)
