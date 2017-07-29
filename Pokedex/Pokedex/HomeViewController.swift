@@ -47,11 +47,17 @@ class HomeViewController: UIViewController, Progressable {
         
     }
     
+    func addNewPokemon(_ pokemon: Pokemon) {
+        pokemons.append(pokemon)
+        tableView.reloadData()
+    }
+    
     @objc func createPokemon() {
         let storyboard = UIStoryboard(name: "Main", bundle: .main)
         let createPokemonViewController = storyboard.instantiateViewController(
             withIdentifier: "CreatePokemonVC"
-        )
+        ) as! CreatePokemonViewController
+        createPokemonViewController.delegate = self
         self.navigationController?.pushViewController(createPokemonViewController, animated: true)
     }
     

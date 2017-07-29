@@ -17,6 +17,7 @@ class LoginViewController: UIViewController, Progressable {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var userNameTextField: UITextField!
     @IBOutlet weak var signUpButton: UIButton!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     let disposeBag = DisposeBag()
     
@@ -93,7 +94,33 @@ class LoginViewController: UIViewController, Progressable {
     func setupView() {
         loginButton.setTitle("Log In", for: .normal)
         signUpButton.setTitle("Sign Up", for: .normal)
+
+        registerKeyboardNotifications()
+    }
+    
+    func registerKeyboardNotifications() {
         
+        NotificationCenter
+            .default
+            .addObserver(forName: Notification.Name.UIKeyboardWillShow, object: self, queue: OperationQueue.main) { notification in
+                let userInfo: NSDictionary = notification.userInfo! as NSDictionary
+                let keyboardInfo = userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue
+                let keyboardSize = keyboardInfo.cgRectValue.size
+                let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
+                self.scrollView.contentInset = contentInsets
+                self.scrollView.scrollIndicatorInsets = contentInsets
+        }
+        
+        NotificationCenter
+            .default
+            .addObserver(forName: Notification.Name.UIKeyboardWillHide, object: self, queue: OperationQueue.main) { notification in
+                // keyboard is about to hide, handle UIScrollView contentInset, e.g.
+                self.scrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
+            }
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 
 }

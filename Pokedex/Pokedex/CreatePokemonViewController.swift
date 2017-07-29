@@ -19,6 +19,9 @@ class CreatePokemonViewController: UIViewController {
     @IBOutlet weak var descriptionTextField: UITextField!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var addButton: UIButton!
+    @IBOutlet weak var saveButton: UIButton!
+    
+    var delegate: HomeViewController?
     
     let disposeBag = DisposeBag()
     let imagePicker = UIImagePickerController()
@@ -36,6 +39,32 @@ class CreatePokemonViewController: UIViewController {
                 guard let imPicker = self?.imagePicker else { return }
                 self?.present(imPicker, animated: true, completion: nil)
             }).disposed(by: disposeBag)
+        
+        saveButton
+            .rx.tap
+            .asDriver()
+            .drive(onNext: { [weak self] _ in
+                guard let name = self?.nameTextField.text,
+                let height = self?.heightTextField.text,
+                let weight = self?.weightTextField.text,
+                let type = self?.typeTextField.text,
+                //let abilities = self?.abilitiesSelectField.text,
+                let description = self?.descriptionTextField.text,
+                let disposeBag = self?.disposeBag
+                    else { return }
+                
+                PokemonService.createPokemon(name: name,
+                                             height: height,
+                                             weight: weight,
+                                             type: type,
+                                             description: description,
+                                             pokemonImage: self?.imageView?.image)
+                    .subscribe(onNext:{ [weak self] response in
+                        guard let createdPokemon = response else { return }
+                        self?.delegate?.addNewPokemon(createdPokemon)
+                        self?.navigationController?.popViewController(animated: true)
+                    }).disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
     }
     
 }
@@ -45,6 +74,7 @@ extension CreatePokemonViewController: UIImagePickerControllerDelegate {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             imageView.contentMode = .scaleAspectFit
             imageView.image = pickedImage
+            
         }
         
         dismiss(animated: true, completion: nil)
