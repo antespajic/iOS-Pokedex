@@ -28,7 +28,7 @@
                                                 <rect key="frame" x="0.0" y="30" width="375" height="151"/>
                                             </imageView>
                                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="pokeball" translatesAutoresizingMaskIntoConstraints="NO" id="C5s-d8-lXt">
-                                                <rect key="frame" x="94" y="186" width="187" height="151"/>
+                                                <rect key="frame" x="94" y="186" width="187" height="150"/>
                                             </imageView>
                                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="ic-mail" translatesAutoresizingMaskIntoConstraints="NO" id="EGC-af-J1T">
                                                 <rect key="frame" x="16" y="371.5" width="24" height="24"/>

@@ -36,7 +36,7 @@ class LoginViewController: UIViewController, Progressable {
                 
                 self.showLoading()
                 
-                self.login(username: username, password: password)
+                self.login(username: username, password: password, saveCredentials: true)
                 
             }).disposed(by: disposeBag)
         
@@ -62,15 +62,24 @@ class LoginViewController: UIViewController, Progressable {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
+        
+        if let email = UserDefaults.standard.value(forKey: "email") as? String,
+            let password = UserDefaults.standard.value(forKey: "password") as? String {
+            login(username: email, password: password, saveCredentials: false)
+        }
     }
     
-    func login(username: String, password: String) {
+    func login(username: String, password: String, saveCredentials: Bool) {
         SessionService
             .login(email: username, password: password)
             .subscribe(
                 onNext: { [weak self] response in
                     self?.hideLoading()
                     guard let user = response else { return }
+                    if (saveCredentials) {
+                        UserDefaults.standard.setValue(username, forKey: "email")
+                        UserDefaults.standard.setValue(password, forKey: "password")
+                    }
                     
                     UserSession.sharedInstance.createAuthHeader(authToken: user.authToken, email: user.email)
                     
@@ -99,28 +108,33 @@ class LoginViewController: UIViewController, Progressable {
     }
     
     func registerKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillShow(notification:)),
+                                               name: NSNotification.Name.UIKeyboardWillShow,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillHide(notification:)),
+                                               name: NSNotification.Name.UIKeyboardWillHide,
+                                               object: nil)
         
-        NotificationCenter
-            .default
-            .addObserver(forName: Notification.Name.UIKeyboardWillShow, object: self, queue: OperationQueue.main) { notification in
-                let userInfo: NSDictionary = notification.userInfo! as NSDictionary
-                let keyboardInfo = userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue
-                let keyboardSize = keyboardInfo.cgRectValue.size
-                let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
-                self.scrollView.contentInset = contentInsets
-                self.scrollView.scrollIndicatorInsets = contentInsets
-        }
-        
-        NotificationCenter
-            .default
-            .addObserver(forName: Notification.Name.UIKeyboardWillHide, object: self, queue: OperationQueue.main) { notification in
-                // keyboard is about to hide, handle UIScrollView contentInset, e.g.
-                self.scrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
-            }
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self)
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        let userInfo: NSDictionary = notification.userInfo! as NSDictionary
+        let keyboardInfo = userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue
+        let keyboardSize = keyboardInfo.cgRectValue.size
+        let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
+        scrollView.contentInset = contentInsets
+        scrollView.scrollIndicatorInsets = contentInsets
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        scrollView.contentInset = .zero
+        scrollView.scrollIndicatorInsets = .zero
     }
 
 }
