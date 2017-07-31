@@ -7,29 +7,125 @@
 //
 
 import UIKit
+import RxCocoa
+import RxSwift
 
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController, Progressable {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    let disposeBag = DisposeBag()
+    
+    var user: User?
+    
+    @IBOutlet weak var tableView: UITableView! {
+        didSet {
+            tableView.delegate = self
+            tableView.dataSource = self
+        }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    var pokemons: [Pokemon] = []
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.navigationBar.backItem?.title = ""
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            image: #imageLiteral(resourceName: "ic-logout"),
+            style: .plain,
+            target: self,
+            action: #selector(logout)
+        )
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: #imageLiteral(resourceName: "ic-plus"),
+            style: .plain,
+            target: self,
+            action: #selector(createPokemon)
+        )
+        
     }
-    */
-
+    
+    func addNewPokemon(_ pokemon: Pokemon) {
+        pokemons.append(pokemon)
+        tableView.reloadData()
+    }
+    
+    @objc func createPokemon() {
+        let storyboard = UIStoryboard(name: "Main", bundle: .main)
+        let createPokemonViewController = storyboard.instantiateViewController(
+            withIdentifier: "CreatePokemonVC"
+        ) as! CreatePokemonViewController
+        createPokemonViewController.delegate = self
+        self.navigationController?.pushViewController(createPokemonViewController, animated: true)
+    }
+    
+    @objc func logout() {
+        SessionService
+            .logout()
+            .subscribe( onNext: { [weak self] result in
+                switch result {
+                case .success:
+                    UserSession.sharedInstance.clearAuthHeader()
+                    
+                    let storyboard = UIStoryboard(name: "Main", bundle: .main)
+                    let loginViewController = storyboard.instantiateViewController(
+                            withIdentifier: "LoginViewController"
+                        )
+                    
+                    self?.navigationController?.setViewControllers([loginViewController], animated: true)
+                    
+                case .failure:
+                    print("No internet connection?")
+                }
+            }).disposed(by: disposeBag)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        showLoading()
+        PokemonService.getAll()
+            .subscribe(
+                onNext: { [weak self] response in
+                    self?.pokemons = response
+                    self?.hideLoading()
+                    self?.tableView.reloadData()
+                }
+            ).disposed(by: disposeBag)
+    }
 }
+
+
+extension HomeViewController: UITableViewDelegate {
+    
+}
+
+extension HomeViewController: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        /*
+         Number of rows in each section
+         */
+        return pokemons.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: PokemonTableViewCell = tableView.dequeueReusableCell(
+            withIdentifier: "PokemonTableViewCell",
+            for: indexPath
+        ) as! PokemonTableViewCell
+        let poke = pokemons[indexPath.row]
+        cell.pokemonName.text = poke.name
+        
+        return cell
+    }
+    
+}
+
+

@@ -9,10 +9,11 @@
 import Foundation
 import Alamofire
 import CodableAlamofire
-import RxCocoa
 import RxSwift
 
-struct UserService {
+class UserService {
+    
+    private init() {}
     
     static func register(email: String, username: String, password: String, confirmationPassword: String) -> Observable<User?> {
         let params = [
@@ -28,7 +29,7 @@ struct UserService {
         ]
         
         return Observable.create { observer in
-            Alamofire
+            let request = Alamofire
                 .request(
                     APIConstants.baseURL + "/users",
                     method: .post,
@@ -40,11 +41,14 @@ struct UserService {
                     switch response.result {
                     case .success(let user):
                         observer.onNext(user)
+                        observer.onCompleted()
                     case .failure(let error):
                         observer.onError(error)
                     }
             }
-            return Disposables.create()
+            return Disposables.create {
+                request.cancel()
+            }
         }
         
     }
