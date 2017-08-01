@@ -10,6 +10,9 @@ import Foundation
 
 struct Pokemon: Codable {
     
+    let id: String
+    let type: String
+    
     private struct DataAttributes: Codable {
         let name: String
         let order: Int
@@ -30,8 +33,6 @@ struct Pokemon: Codable {
         }
     }
     
-    private let id: String
-    private let type: String
     private let attributes: DataAttributes
     
     var name: String { return attributes.name }

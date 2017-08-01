@@ -31,7 +31,7 @@ class UserService {
         return Observable.create { observer in
             let request = Alamofire
                 .request(
-                    APIConstants.baseURL + "/users",
+                    APIConstants.apiURL + "/users",
                     method: .post,
                     parameters: params,
                     encoding: JSONEncoding.default

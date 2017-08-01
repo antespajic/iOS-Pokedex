@@ -10,7 +10,8 @@ import Foundation
 
 class APIConstants {
     
-    static let baseURL = "https://pokeapi.infinum.co/api/v1"
+    static let apiURL = "https://pokeapi.infinum.co/api/v1"
+    static let baseURL = "https://pokeapi.infinum.co"
     
     private init(){}
 }
