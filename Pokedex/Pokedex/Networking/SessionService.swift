@@ -11,7 +11,7 @@ import Alamofire
 import CodableAlamofire
 import RxSwift
 
-class SessionService {
+final class SessionService {
     
     private init() {}
     

@@ -13,7 +13,7 @@ struct User: Codable {
     private struct DataAttributes: Codable {
         let email: String
         let username: String
-        let authToken: String
+        let authToken: String?
         
         enum CodingKeys: String, CodingKey {
             case authToken = "auth-token"
@@ -34,5 +34,5 @@ struct User: Codable {
     var id: String { return data.id }
     var email: String  { return data.attributes.email }
     var username: String  { return data.attributes.username }
-    var authToken: String  { return data.attributes.authToken }
+    var authToken: String?  { return data.attributes.authToken }
 }

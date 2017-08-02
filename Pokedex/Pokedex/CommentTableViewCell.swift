@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RxSwift
 
 final class CommentTableViewCell: UITableViewCell {
 
@@ -21,8 +22,18 @@ final class CommentTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
 
+    func configureWith(comment: Comment) {
+        guard let userId = comment.authorId else { return }
+        UserService.getUser(withId: userId)
+            .subscribe(onNext: { [weak self] (response: User) in
+                self?.usernameLabel.text = response.username
+                self?.commentLabel.text = comment.content
+                self?.dateLabel.text = comment.createdAt
+            }, onError: { error in
+               print("jojoj")
+            })
+        
+    }
 }

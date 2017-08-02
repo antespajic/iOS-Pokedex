@@ -15,8 +15,9 @@ class UserSession {
     
     private init() {}
     
-    func createAuthHeader(authToken: String, email: String) {
-        self.authHeader = "Token token=" + authToken + ", email=" + email
+    func createAuthHeader(authToken: String?, email: String) {
+        guard let token = authToken else { return }
+        self.authHeader = "Token token=" + token + ", email=" + email
     }
     
     func clearAuthHeader() {

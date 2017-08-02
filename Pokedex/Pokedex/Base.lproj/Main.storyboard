@@ -767,6 +767,7 @@
                     <size key="freeformSize" width="375" height="1250"/>
                     <connections>
                         <outlet property="abilitiesLabel" destination="pLW-4X-2Zo" id="vtP-Ej-DL6"/>
+                        <outlet property="commentsTableView" destination="VLx-zU-w2G" id="rp3-TK-lZj"/>
                         <outlet property="genderLabel" destination="sUs-cc-8KL" id="9HH-0Z-J10"/>
                         <outlet property="heightLabel" destination="w9b-Mx-G0B" id="FN9-s1-jwf"/>
                         <outlet property="pokemonDescLabel" destination="ZvN-ds-ryc" id="NHt-jy-2G2"/>

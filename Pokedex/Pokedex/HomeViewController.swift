@@ -95,7 +95,6 @@ class HomeViewController: UIViewController, Progressable {
     
 }
 
-
 extension HomeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell: PokemonTableViewCell = tableView.cellForRow(at: indexPath) as! PokemonTableViewCell

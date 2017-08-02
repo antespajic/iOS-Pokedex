@@ -11,17 +11,20 @@ import RxSwift
 import Alamofire
 import CodableAlamofire
 
-class PokemonService {
+final class PokemonService {
     
-    private init() {}
+    private let headers: HTTPHeaders!
+    
+    private init?() {
+        guard let authHeader = UserSession.sharedInstance.authHeader else { return nil }
+        
+        self.headers = [
+            "Authorization": authHeader
+        ]
+    }
     
     static func getAll() -> Observable<[Pokemon]> {
         
-        guard let authHeader = UserSession.sharedInstance.authHeader else { return Observable.just([]) }
-        
-        let headers: HTTPHeaders = [
-            "Authorization": authHeader
-        ]
         
         return Observable.create { observer in
             let request = Alamofire
@@ -47,11 +50,6 @@ class PokemonService {
     }
     
     static func createPokemon(name: String, height: String, weight: String, type: String, description: String, pokemonImage: UIImage?) -> Observable<Pokemon?> {
-        guard let authHeader = UserSession.sharedInstance.authHeader else { return Observable.just(Optional.none) }
-        
-        let headers: HTTPHeaders = [
-            "Authorization": authHeader
-        ]
         
         let attributes = [
             "name": name,
@@ -100,11 +98,6 @@ class PokemonService {
     }
     
     static func getPokemon(withId id:String) -> Observable<Pokemon?> {
-        guard let authHeader = UserSession.sharedInstance.authHeader else { return Observable.just(Optional.none) }
-        
-        let headers: HTTPHeaders = [
-            "Authorization": authHeader
-        ]
         
         return Observable.create { observer in
             let request =
@@ -126,4 +119,28 @@ class PokemonService {
             }
         }
     }
+    
+    static func getComments(forPokemonId id: String) -> Observable<[Comment]> {
+        
+        return Observable.create{ observer in
+            
+            let request = Alamofire
+                .request(APIConstants.apiURL + "/pokemons/\(id)/comments", method: .get, headers: headers)
+                .validate()
+                .responseDecodableObject(keyPath: "data"){ (response: DataResponse<[Comment]>) in
+                    switch response.result {
+                    case .success(let comments):
+                        observer.onNext(comments)
+                        observer.onCompleted()
+                    case .failure(let error):
+                        observer.onError(error)
+                    }
+                }
+            return Disposables.create{
+                request.cancel()
+            }
+        }
+        
+    }
+
 }
