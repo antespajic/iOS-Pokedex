@@ -33,7 +33,7 @@ class LoginViewController: UIViewController, Progressable {
                     let password = self?.passwordTextField.text,
                     !username.isEmpty, !password.isEmpty
                     else { return }
-                
+                self?.loginButton.animatePulse()
                 self?.showLoading()
                 
                 self?.login(username: username, password: password, saveCredentials: true)
@@ -44,6 +44,7 @@ class LoginViewController: UIViewController, Progressable {
             .rx.tap
             .asDriver()
             .drive(onNext: { [weak self] _ in
+                self?.signUpButton.animatePulse()
                 self?.showLoading()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2 ) { [weak self] in
                     self?.hideLoading()

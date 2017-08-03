@@ -29,6 +29,8 @@
 		5C82A71A1F1E8EF70017F67F /* APIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C82A7191F1E8EF70017F67F /* APIConstants.swift */; };
 		5C8591C81F326FFA0079922A /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8591C71F326FFA0079922A /* Comment.swift */; };
 		5CB1AC3B1F311A4000C04F97 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB1AC3A1F311A4000C04F97 /* CommentTableViewCell.swift */; };
+		5CEAEC561F33A54700C6E170 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CEAEC551F33A54700C6E170 /* StringExtension.swift */; };
+		5CEAEC581F33ADA700C6E170 /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CEAEC571F33ADA700C6E170 /* UIButtonExtension.swift */; };
 		6952E02A7E59C9C6C1A3D4F0 /* Pods_PokedexTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35D11E9E0635873DDD9AF8C1 /* Pods_PokedexTests.framework */; };
 		920CB3C5E87550069C0586FF /* Pods_PokedexUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11C90FF4EB44A3205A8EFA63 /* Pods_PokedexUITests.framework */; };
 		F917DF1B76BF4F285FF1FBC7 /* Pods_Pokedex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34CA5F960ADAFEE565953F27 /* Pods_Pokedex.framework */; };
@@ -85,6 +87,8 @@
 		5C8591C71F326FFA0079922A /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		5C9C2C871F13DBE4005149B6 /* MBProgressHUD.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MBProgressHUD.framework; path = "Pods/../build/Debug-iphoneos/MBProgressHUD/MBProgressHUD.framework"; sourceTree = "<group>"; };
 		5CB1AC3A1F311A4000C04F97 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
+		5CEAEC551F33A54700C6E170 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		5CEAEC571F33ADA700C6E170 /* UIButtonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
 		5CF3054F1F1BF42400502F5A /* PKHUD.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PKHUD.framework; path = "../../../Library/Developer/Xcode/DerivedData/Pokedex-akflmpssqtttjvgeaqgcqalnygqg/Build/Products/Debug-iphonesimulator/PKHUD/PKHUD.framework"; sourceTree = "<group>"; };
 		5CF305501F1BF42B00502F5A /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = "../../../Library/Developer/Xcode/DerivedData/Pokedex-akflmpssqtttjvgeaqgcqalnygqg/Build/Products/Debug-iphonesimulator/Alamofire/Alamofire.framework"; sourceTree = "<group>"; };
 		5CF305511F1BF42E00502F5A /* CodableAlamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CodableAlamofire.framework; path = "../../../Library/Developer/Xcode/DerivedData/Pokedex-akflmpssqtttjvgeaqgcqalnygqg/Build/Products/Debug-iphonesimulator/CodableAlamofire/CodableAlamofire.framework"; sourceTree = "<group>"; };
@@ -148,6 +152,7 @@
 		5C1CAAC41F0E8EC300770705 /* Pokedex */ = {
 			isa = PBXGroup;
 			children = (
+				5CEAEC591F33AFBF00C6E170 /* Extensions */,
 				5C8591CA1F3270350079922A /* Networking */,
 				5C8591C91F3270170079922A /* Model */,
 				5C1CAAD11F0E8EC300770705 /* Info.plist */,
@@ -205,6 +210,15 @@
 				5C48EBF41F27C1B00036E47D /* PokemonService.swift */,
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		5CEAEC591F33AFBF00C6E170 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				5CEAEC571F33ADA700C6E170 /* UIButtonExtension.swift */,
+				5CEAEC551F33A54700C6E170 /* StringExtension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		668352B9E6E0CA3B904DFB35 /* Pods */ = {
@@ -536,6 +550,7 @@
 			files = (
 				5C48EBF51F27C1B00036E47D /* PokemonService.swift in Sources */,
 				5C82A7181F1E8E6C0017F67F /* UserService.swift in Sources */,
+				5CEAEC581F33ADA700C6E170 /* UIButtonExtension.swift in Sources */,
 				5C48EBF91F27C5B20036E47D /* PokemonTableViewCell.swift in Sources */,
 				5C425ED71F210432003098BB /* Progressable.swift in Sources */,
 				5C48EBF71F27C2C10036E47D /* UserSession.swift in Sources */,
@@ -548,6 +563,7 @@
 				5C4A58AD1F29259C005D725A /* CreatePokemonViewController.swift in Sources */,
 				5CB1AC3B1F311A4000C04F97 /* CommentTableViewCell.swift in Sources */,
 				5C1E25861F2F8B2A0091FA3C /* PokemonDetailsViewController.swift in Sources */,
+				5CEAEC561F33A54700C6E170 /* StringExtension.swift in Sources */,
 				5C1CAAC61F0E8EC300770705 /* AppDelegate.swift in Sources */,
 				5C82A7121F1E87780017F67F /* User.swift in Sources */,
 				5C82A70F1F1E84B30017F67F /* HomeViewController.swift in Sources */,

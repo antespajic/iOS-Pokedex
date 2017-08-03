@@ -13,18 +13,16 @@ import CodableAlamofire
 
 final class PokemonService {
     
-    private let headers: HTTPHeaders!
-    
-    private init?() {
-        guard let authHeader = UserSession.sharedInstance.authHeader else { return nil }
+    private init() {
         
-        self.headers = [
-            "Authorization": authHeader
-        ]
     }
     
     static func getAll() -> Observable<[Pokemon]> {
+        guard let authHeader = UserSession.sharedInstance.authHeader else { return Observable.just([]) }
         
+        let headers: HTTPHeaders = [
+            "Authorization": authHeader
+        ]
         
         return Observable.create { observer in
             let request = Alamofire
@@ -50,7 +48,11 @@ final class PokemonService {
     }
     
     static func createPokemon(name: String, height: String, weight: String, type: String, description: String, pokemonImage: UIImage?) -> Observable<Pokemon?> {
+        guard let authHeader = UserSession.sharedInstance.authHeader else { return Observable.just(nil) }
         
+        let headers: HTTPHeaders = [
+            "Authorization": authHeader
+        ]
         let attributes = [
             "name": name,
             "height": height,
@@ -98,7 +100,11 @@ final class PokemonService {
     }
     
     static func getPokemon(withId id:String) -> Observable<Pokemon?> {
+        guard let authHeader = UserSession.sharedInstance.authHeader else { return Observable.just(nil) }
         
+        let headers: HTTPHeaders = [
+            "Authorization": authHeader
+        ]
         return Observable.create { observer in
             let request =
                 Alamofire
@@ -121,6 +127,9 @@ final class PokemonService {
     }
     
     static func getComments(forPokemonId id: String) -> Observable<[Comment]> {
+        guard let authHeader = UserSession.sharedInstance.authHeader else { return Observable.just([]) }
+        
+        let headers: HTTPHeaders = [ "Authorization": authHeader ]
         
         return Observable.create{ observer in
             
@@ -142,5 +151,53 @@ final class PokemonService {
         }
         
     }
+    
+    static func upvotePokemon(withId id: String) {
+        guard let authHeader = UserSession.sharedInstance.authHeader else { return }
+        let headers: HTTPHeaders = [ "Authorization": authHeader ]
+        
+        Alamofire.request(APIConstants.apiURL + "/pokemons/\(id)/upvote", method: .post, headers: headers)
+    }
 
+    static func downvotePokemon(withId id: String) {
+        guard let authHeader = UserSession.sharedInstance.authHeader else { return }
+        let headers: HTTPHeaders = [ "Authorization": authHeader ]
+        
+        Alamofire.request(APIConstants.apiURL + "/pokemons/\(id)/downvote", method: .post, headers: headers)
+    }
+    
+    static func commentOnPokemon(withId id: String, comment: String) -> Observable<Comment?> {
+        guard let authHeader = UserSession.sharedInstance.authHeader else { return Observable.just(nil) }
+        let headers: HTTPHeaders = [ "Authorization": authHeader ]
+        
+        let params = [
+            "data": [
+                "attributes": [
+                    "content": comment
+                ]
+            ]
+        ]
+        return Observable.create{ observer in
+            let request = Alamofire.request(APIConstants.apiURL + "/pokemons/\(id)/comments",
+                method: .post,
+                parameters: params,
+                headers: headers)
+                .validate()
+                .responseDecodableObject(keyPath: "data"){ (response: DataResponse<Comment>) in
+                    switch response.result {
+                    case .success(let comment):
+                        observer.onNext(comment)
+                        observer.onCompleted()
+                    case .failure(let error):
+                        observer.onError(error)
+                    }
+                }
+            
+            return Disposables.create {
+                request.cancel()
+            }
+            
+        }
+        
+    }
 }

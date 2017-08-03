@@ -41,7 +41,7 @@ struct Comment: Codable {
     private let attributes: DataAttributes
     private let relationships: RelationshipAttributes
     
-    var content: String? { return attributes.content }
-    var createdAt: String? { return attributes.createdAt }
-    var authorId: String? { return relationships.author.data.id }
+    var content: String { return attributes.content }
+    var createdAt: String { return attributes.createdAt }
+    var authorId: String { return relationships.author.data.id }
 }

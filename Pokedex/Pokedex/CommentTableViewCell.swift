@@ -25,14 +25,14 @@ final class CommentTableViewCell: UITableViewCell {
     }
 
     func configureWith(comment: Comment) {
-        guard let userId = comment.authorId else { return }
-        UserService.getUser(withId: userId)
-            .subscribe(onNext: { [weak self] (response: User) in
-                self?.usernameLabel.text = response.username
+        UserService.getUser(withId: comment.authorId)
+            .subscribe(onNext: { [weak self] (response: User?) in
+                guard let user = response else { return }
+                self?.usernameLabel.text = user.username
                 self?.commentLabel.text = comment.content
-                self?.dateLabel.text = comment.createdAt
+                self?.dateLabel.text = comment.createdAt.fromIsoToFormattedDate(withFormat: "MMM dd,yyyy")
             }, onError: { error in
-               print("jojoj")
+                print(error)
             })
         
     }

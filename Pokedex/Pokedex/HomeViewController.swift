@@ -79,12 +79,11 @@ class HomeViewController: UIViewController, Progressable {
                 switch result {
                 case .success:
                     UserSession.sharedInstance.clearAuthHeader()
-                    
+                    UserDefaults.standard.removeObject(forKey: "email")
                     let storyboard = UIStoryboard(name: "Main", bundle: .main)
                     let loginViewController = storyboard.instantiateViewController(
                             withIdentifier: "LoginViewController"
                         )
-                    
                     self?.navigationController?.setViewControllers([loginViewController], animated: true)
                     
                 case .failure:

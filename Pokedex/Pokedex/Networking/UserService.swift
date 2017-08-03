@@ -13,14 +13,8 @@ import RxSwift
 
 final class UserService {
     
-    private let headers: HTTPHeaders!
-    
-    private init?() {
-        guard let authHeader = UserSession.sharedInstance.authHeader else { return nil }
+    private init() {
         
-        self.headers = [
-            "Authorization": authHeader
-        ]
     }
     
     static func register(email: String, username: String, password: String, confirmationPassword: String) -> Observable<User?> {
@@ -61,14 +55,17 @@ final class UserService {
         
     }
     
-    static func getUser(withId id: String) -> Observable<User> {
+    static func getUser(withId id: String) -> Observable<User?> {
+        guard let authHeader = UserSession.sharedInstance.authHeader else { return Observable.just(nil) }
+        
+        let headers = [ "Authorization": authHeader ]
         
         return Observable.create{ observer in
             
             let request = Alamofire
                 .request(APIConstants.apiURL + "/users/\(id)", method: .get, headers: headers)
                 .validate()
-                .responseDecodableObject(keyPath: "data") { (response: DataResponse<User>) in
+                .responseDecodableObject{ (response: DataResponse<User>) in
                     switch response.result{
                     case .success(let user):
                         observer.onNext(user)

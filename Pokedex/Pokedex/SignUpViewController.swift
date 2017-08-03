@@ -35,7 +35,7 @@ class SignUpViewController: UIViewController, Progressable {
                     let disposeBag = self?.disposeBag,
                     confirmPassword == password
                 else { return }
-                
+                self?.signUpButton.animatePulse()
                 self?.showLoading()
                 
                 UserService.register(email: email,
