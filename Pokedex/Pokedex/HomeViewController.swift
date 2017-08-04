@@ -9,10 +9,11 @@
 import UIKit
 import RxCocoa
 import RxSwift
+import Kingfisher
 
 class HomeViewController: UIViewController, Progressable {
 
-    let disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     var user: User?
     
@@ -29,6 +30,7 @@ class HomeViewController: UIViewController, Progressable {
         super.viewDidLoad()
         
         navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.navigationBar.topItem?.title = "Pokedex"
         navigationController?.navigationBar.backItem?.title = ""
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(
@@ -45,6 +47,15 @@ class HomeViewController: UIViewController, Progressable {
             action: #selector(createPokemon)
         )
         
+        showLoading()
+        PokemonService.getAll()
+            .subscribe(
+                onNext: { [weak self] response in
+                    self?.pokemons = response
+                    self?.hideLoading()
+                    self?.tableView.reloadData()
+                }
+            ).disposed(by: disposeBag)
     }
     
     func addNewPokemon(_ pokemon: Pokemon) {
@@ -68,12 +79,11 @@ class HomeViewController: UIViewController, Progressable {
                 switch result {
                 case .success:
                     UserSession.sharedInstance.clearAuthHeader()
-                    
+                    UserDefaults.standard.removeObject(forKey: "email")
                     let storyboard = UIStoryboard(name: "Main", bundle: .main)
                     let loginViewController = storyboard.instantiateViewController(
                             withIdentifier: "LoginViewController"
                         )
-                    
                     self?.navigationController?.setViewControllers([loginViewController], animated: true)
                     
                 case .failure:
@@ -82,23 +92,28 @@ class HomeViewController: UIViewController, Progressable {
             }).disposed(by: disposeBag)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        showLoading()
-        PokemonService.getAll()
-            .subscribe(
-                onNext: { [weak self] response in
-                    self?.pokemons = response
-                    self?.hideLoading()
-                    self?.tableView.reloadData()
-                }
-            ).disposed(by: disposeBag)
-    }
 }
 
-
 extension HomeViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell: PokemonTableViewCell = tableView.cellForRow(at: indexPath) as! PokemonTableViewCell
+        let storyboard = UIStoryboard(name: "Main", bundle: .main)
+        let detailsViewController = storyboard.instantiateViewController(
+            withIdentifier: "PokemonDetailsVC"
+        ) as! PokemonDetailsViewController
+        
+        detailsViewController.pokemonId = cell.pokemonId
+        self.navigationController?.pushViewController(detailsViewController, animated: true)
+    }
     
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let pokemonCell = cell as? PokemonTableViewCell
+        pokemonCell?.pokemonImage.kf.cancelDownloadTask()
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 70
+    }
 }
 
 extension HomeViewController: UITableViewDataSource {
@@ -121,7 +136,7 @@ extension HomeViewController: UITableViewDataSource {
             for: indexPath
         ) as! PokemonTableViewCell
         let poke = pokemons[indexPath.row]
-        cell.pokemonName.text = poke.name
+        cell.configureWith(pokemon: poke)
         
         return cell
     }

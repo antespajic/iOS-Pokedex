@@ -11,7 +11,7 @@ import Alamofire
 import CodableAlamofire
 import RxSwift
 
-class SessionService {
+final class SessionService {
     
     private init() {}
     
@@ -30,7 +30,7 @@ class SessionService {
             
             let request = Alamofire
                 .request(
-                    APIConstants.baseURL + "/users/login",
+                    APIConstants.apiURL + "/users/login",
                     method: .post,
                     parameters: params,
                     encoding: JSONEncoding.default
@@ -71,7 +71,7 @@ class SessionService {
             
             let request = Alamofire
                 .request(
-                    APIConstants.baseURL + "/users/logout",
+                    APIConstants.apiURL + "/users/logout",
                     method: .delete,
                     headers: headers
                 )

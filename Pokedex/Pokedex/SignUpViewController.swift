@@ -19,7 +19,7 @@ class SignUpViewController: UIViewController, Progressable {
     @IBOutlet weak var confirmPasswordTextField: UITextField!
     @IBOutlet weak var signUpButton: UIButton!
     
-    let disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,15 +27,16 @@ class SignUpViewController: UIViewController, Progressable {
         signUpButton
             .rx.tap
             .asDriver()
-            .drive(onNext: { _ in
-                guard let email = self.emailTextField.text,
-                    let username = self.usernameTextField.text,
-                    let password = self.passwordTextField.text,
-                    let confirmPassword = self.confirmPasswordTextField.text,
+            .drive(onNext: { [weak self] _ in
+                guard let email = self?.emailTextField.text,
+                    let username = self?.usernameTextField.text,
+                    let password = self?.passwordTextField.text,
+                    let confirmPassword = self?.confirmPasswordTextField.text,
+                    let disposeBag = self?.disposeBag,
                     confirmPassword == password
                 else { return }
-                
-                self.showLoading()
+                self?.signUpButton.animatePulse()
+                self?.showLoading()
                 
                 UserService.register(email: email,
                                      username: username,
@@ -58,7 +59,7 @@ class SignUpViewController: UIViewController, Progressable {
                         self?.showError()
                         print(error)
                     }
-                    ).disposed(by: self.disposeBag)
+                    ).disposed(by: disposeBag)
             })
             .disposed(by: disposeBag)
         

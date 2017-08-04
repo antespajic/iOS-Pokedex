@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class CreatePokemonViewController: UIViewController {
+final class CreatePokemonViewController: UIViewController {
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var heightTextField: UITextField!
     @IBOutlet weak var weightTextField: UITextField!
@@ -20,10 +20,11 @@ class CreatePokemonViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     var delegate: HomeViewController?
     
-    let disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     let imagePicker = UIImagePickerController()
     
     override func viewDidLoad() {
@@ -43,28 +44,63 @@ class CreatePokemonViewController: UIViewController {
         saveButton
             .rx.tap
             .asDriver()
-            .drive(onNext: { [weak self] _ in
+            .asObservable()
+            .flatMap{ [weak self] _ -> Observable<Pokemon?> in
                 guard let name = self?.nameTextField.text,
-                let height = self?.heightTextField.text,
-                let weight = self?.weightTextField.text,
-                let type = self?.typeTextField.text,
-                //let abilities = self?.abilitiesSelectField.text,
-                let description = self?.descriptionTextField.text,
-                let disposeBag = self?.disposeBag
-                    else { return }
+                    let height = self?.heightTextField.text,
+                    let weight = self?.weightTextField.text,
+                    let type = self?.typeTextField.text,
+                    //let abilities = self?.abilitiesSelectField.text,
+                    let description = self?.descriptionTextField.text
+                    else { return Observable.just(nil) }
                 
-                PokemonService.createPokemon(name: name,
-                                             height: height,
-                                             weight: weight,
-                                             type: type,
-                                             description: description,
-                                             pokemonImage: self?.imageView?.image)
-                    .subscribe(onNext:{ [weak self] response in
+                return PokemonService.createPokemon(name: name,
+                                                    height: height,
+                                                    weight: weight,
+                                                    type: type,
+                                                    description: description,
+                                                    pokemonImage: self?.imageView?.image)
+            }
+            .subscribe (onNext: { [weak self] response in
                         guard let createdPokemon = response else { return }
                         self?.delegate?.addNewPokemon(createdPokemon)
                         self?.navigationController?.popViewController(animated: true)
-                    }).disposed(by: disposeBag)
-            }).disposed(by: disposeBag)
+                }, onError:{ error in
+                    print(error)
+            })
+            .disposed(by: disposeBag)
+        
+        registerKeyboardNotifications()
+    }
+    
+    func registerKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillShow(notification:)),
+                                               name: NSNotification.Name.UIKeyboardWillShow,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillHide(notification:)),
+                                               name: NSNotification.Name.UIKeyboardWillHide,
+                                               object: nil)
+        
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        let userInfo: NSDictionary = notification.userInfo! as NSDictionary
+        let keyboardInfo = userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue
+        let keyboardSize = keyboardInfo.cgRectValue.size
+        let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height + 15, right: 0)
+        scrollView.contentInset = contentInsets
+        scrollView.scrollIndicatorInsets = contentInsets
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        scrollView.contentInset = .zero
+        scrollView.scrollIndicatorInsets = .zero
     }
     
 }

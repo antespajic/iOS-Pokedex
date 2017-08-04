@@ -19,7 +19,7 @@ class LoginViewController: UIViewController, Progressable {
     @IBOutlet weak var signUpButton: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
     
-    let disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,24 +27,25 @@ class LoginViewController: UIViewController, Progressable {
         loginButton
             .rx.tap
             .asDriver()
-            .drive(onNext: { _ in
+            .drive(onNext: {[weak self] _ in
                 guard
-                    let username = self.userNameTextField.text,
-                    let password = self.passwordTextField.text,
+                    let username = self?.userNameTextField.text,
+                    let password = self?.passwordTextField.text,
                     !username.isEmpty, !password.isEmpty
                     else { return }
+                self?.loginButton.animatePulse()
+                self?.showLoading()
                 
-                self.showLoading()
-                
-                self.login(username: username, password: password, saveCredentials: true)
+                self?.login(username: username, password: password, saveCredentials: true)
                 
             }).disposed(by: disposeBag)
         
         signUpButton
             .rx.tap
             .asDriver()
-            .drive(onNext: { _ in
-                self.showLoading()
+            .drive(onNext: { [weak self] _ in
+                self?.signUpButton.animatePulse()
+                self?.showLoading()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2 ) { [weak self] in
                     self?.hideLoading()
                     let storyboard = UIStoryboard(name: "Main", bundle: .main)
@@ -97,6 +98,8 @@ class LoginViewController: UIViewController, Progressable {
                     self?.present(alert, animated: true, completion: nil)
                 }
             ).disposed(by: disposeBag)
+        
+        
     }
     
     // set button styles and labels
@@ -119,10 +122,6 @@ class LoginViewController: UIViewController, Progressable {
         
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
     @objc func keyboardWillShow(notification: NSNotification) {
         let userInfo: NSDictionary = notification.userInfo! as NSDictionary
         let keyboardInfo = userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue
@@ -136,5 +135,10 @@ class LoginViewController: UIViewController, Progressable {
         scrollView.contentInset = .zero
         scrollView.scrollIndicatorInsets = .zero
     }
+    
+    deinit {
+       NotificationCenter.default.removeObserver(self)
+    }
+    
 
 }
