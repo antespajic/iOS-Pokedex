@@ -33,6 +33,8 @@ Temporary Items
 #
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
 
+**/.DS_Store
+
 ## Build generated
 build/
 DerivedData/
@@ -144,12 +146,7 @@ playground.xcworkspace
 #           - Also handy if you have a lage number of dependant pods
 #           - AS PER https://guides.cocoapods.org/using/using-cocoapods.html NEVER IGONRE THE LOCK FILE
 
-### Swift.Carthage Stack ###
-# Carthage
-#
-# Add this line if you want to avoid checking in source code from Carthage dependencies.
-# Carthage/Checkouts
-
+# Pods/
 
 ### Xcode ###
 # Xcode
