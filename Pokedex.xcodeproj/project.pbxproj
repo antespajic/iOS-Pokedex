@@ -152,6 +152,7 @@
 		5C1CAAC41F0E8EC300770705 /* Pokedex */ = {
 			isa = PBXGroup;
 			children = (
+				D0CFF3131F9A3250005E28D9 /* Protocols */,
 				5CEAEC591F33AFBF00C6E170 /* Extensions */,
 				5C8591CA1F3270350079922A /* Networking */,
 				5C8591C91F3270170079922A /* Model */,
@@ -161,7 +162,6 @@
 				5C1AC5A81F10FA1800773394 /* LaunchScreen.storyboard */,
 				5C1CAAC51F0E8EC300770705 /* AppDelegate.swift */,
 				5C48EBF61F27C2C10036E47D /* UserSession.swift */,
-				5C425ED61F210432003098BB /* Progressable.swift */,
 				5C1CAAF31F0E9BD800770705 /* LoginViewController.swift */,
 				5C21479B1F1BD7FD0003602C /* SignUpViewController.swift */,
 				5C82A70E1F1E84B30017F67F /* HomeViewController.swift */,
@@ -246,6 +246,14 @@
 				11C90FF4EB44A3205A8EFA63 /* Pods_PokedexUITests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D0CFF3131F9A3250005E28D9 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				5C425ED61F210432003098BB /* Progressable.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
