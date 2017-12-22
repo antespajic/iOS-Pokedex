@@ -43,15 +43,14 @@ final class CreatePokemonViewController: UIViewController {
         
         saveButton
             .rx.tap
-            .asDriver()
             .asObservable()
-            .flatMap{ [weak self] _ -> Observable<Pokemon?> in
-                guard let name = self?.nameTextField.text,
-                    let height = self?.heightTextField.text,
-                    let weight = self?.weightTextField.text,
-                    let type = self?.typeTextField.text,
+            .flatMap{ [unowned self] _ -> Observable<Pokemon?> in
+                guard let name = self.nameTextField.text,
+                    let height = self.heightTextField.text,
+                    let weight = self.weightTextField.text,
+                    let type = self.typeTextField.text,
                     //let abilities = self?.abilitiesSelectField.text,
-                    let description = self?.descriptionTextField.text
+                    let description = self.descriptionTextField.text
                     else { return Observable.just(nil) }
                 
                 return PokemonService.createPokemon(name: name,
@@ -59,13 +58,13 @@ final class CreatePokemonViewController: UIViewController {
                                                     weight: weight,
                                                     type: type,
                                                     description: description,
-                                                    pokemonImage: self?.imageView?.image)
+                                                    pokemonImage: self.imageView?.image)
             }
-            .subscribe (onNext: { [weak self] response in
+            .subscribe (onNext: { [unowned self] response in
                         guard let createdPokemon = response else { return }
-                        self?.delegate?.addNewPokemon(createdPokemon)
-                        self?.navigationController?.popViewController(animated: true)
-                }, onError:{ error in
+                        self.delegate?.addNewPokemon(createdPokemon)
+                        self.navigationController?.popViewController(animated: true)
+            }, onError:{ error in
                     print(error)
             })
             .disposed(by: disposeBag)

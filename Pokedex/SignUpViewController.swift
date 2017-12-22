@@ -27,16 +27,16 @@ class SignUpViewController: UIViewController, Progressable {
         signUpButton
             .rx.tap
             .asDriver()
-            .drive(onNext: { [weak self] _ in
-                guard let email = self?.emailTextField.text,
-                    let username = self?.usernameTextField.text,
-                    let password = self?.passwordTextField.text,
-                    let confirmPassword = self?.confirmPasswordTextField.text,
-                    let disposeBag = self?.disposeBag,
+            .drive(onNext: { [unowned self] _ in
+                guard let email = self.emailTextField.text,
+                    let username = self.usernameTextField.text,
+                    let password = self.passwordTextField.text,
+                    let confirmPassword = self.confirmPasswordTextField.text,
+                    let disposeBag = self.disposeBag,
                     confirmPassword == password
                 else { return }
-                self?.signUpButton.animatePulse()
-                self?.showLoading()
+                self.signUpButton.animatePulse()
+                self.showLoading()
                 
                 UserService.register(email: email,
                                      username: username,
